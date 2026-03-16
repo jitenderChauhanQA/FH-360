@@ -37,12 +37,10 @@ Then('the opportunity stage should be {string}', async function (this: CustomWor
 });
 
 When('the user searches for {string} in the list view', async function (this: CustomWorld, searchText: string) {
-  const { DynamicTableComponent } = await import('../components/salesforce/dynamic-table.component');
-  const table = new DynamicTableComponent(this.page);
-  await table.searchInListView(searchText);
+  await this.dynamicTable.searchInListView(searchText);
 });
 
 Then('the opportunity {string} should appear in the results', async function (this: CustomWorld, name: string) {
-  const link = this.page.getByRole('link', { name });
-  await expect(link).toBeVisible();
+  const isCreated = await this.opportunityPage.isOpportunityCreated(name);
+  expect(isCreated).toBeTruthy();
 });

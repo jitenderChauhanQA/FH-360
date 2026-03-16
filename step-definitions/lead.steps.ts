@@ -22,7 +22,6 @@ Then('the lead {string} should be visible on the record page', async function (t
 });
 
 Given('a lead {string} exists in the system', async function (this: CustomWorld, leadName: string) {
-  // Navigate to lead — assumes lead exists from prior test or data setup
   await this.basePage.navigateToTab('Leads');
 });
 
@@ -34,27 +33,16 @@ When('the user opens the lead record for {string}', async function (this: Custom
   await this.basePage.clickLink(leadName);
 });
 
-When('the user clicks the {string} button', async function (this: CustomWorld, buttonName: string) {
-  if (buttonName === 'Convert') {
-    await this.leadPage.convertLead();
-  } else {
-    await this.basePage.clickButton(buttonName);
-  }
-});
-
 Then('the lead should be converted successfully', async function (this: CustomWorld) {
-  // Verify conversion success — typically a toast or redirect
-  await this.page.waitForLoadState('domcontentloaded');
+  await this.basePage.waitForPageLoad();
 });
 
 Then('an Account record should be created', async function (this: CustomWorld) {
-  // Conversion creates Account — verify via page content
-  const url = this.page.url();
-  expect(url).toBeTruthy();
+  const currentUrl = await this.basePage.getCurrentUrl();
+  expect(currentUrl).toBeTruthy();
 });
 
 Then('a Contact record should be created', async function (this: CustomWorld) {
-  // Conversion creates Contact — verify via page content
-  const url = this.page.url();
-  expect(url).toBeTruthy();
+  const currentUrl = await this.basePage.getCurrentUrl();
+  expect(currentUrl).toBeTruthy();
 });

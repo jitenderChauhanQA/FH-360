@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class LoginPage {
+export class LoginPage extends BasePage {
   // ── Locators ───────────────────────────────────────────────
   private usernameInput = this.page.getByLabel('Username');
   private passwordInput = this.page.getByLabel('Password');
@@ -8,12 +9,14 @@ export class LoginPage {
   private appLauncher = this.page.locator('.slds-icon-waffle');
   private errorMessage = this.page.locator('#error');
 
-  constructor(private page: Page) {}
+  constructor(page: Page) {
+    super(page);
+  }
 
   // ── Actions ────────────────────────────────────────────────
   async navigateToLogin(baseUrl: string): Promise<void> {
     await this.page.goto(baseUrl);
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.waitForPageLoad();
   }
 
   async enterCredentials(username: string, password: string): Promise<void> {

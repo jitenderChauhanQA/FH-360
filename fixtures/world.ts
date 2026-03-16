@@ -6,6 +6,7 @@ import { LeadPage } from '../pages/retail/lead.page';
 import { OpportunityPage } from '../pages/retail/opportunity.page';
 import { AccountPage } from '../pages/commercial/account.page';
 import { ToastComponent } from '../components/salesforce/toast.component';
+import { DynamicTableComponent } from '../components/salesforce/dynamic-table.component';
 
 export class CustomWorld extends World {
   browser!: Browser;
@@ -21,6 +22,7 @@ export class CustomWorld extends World {
 
   // Components
   toast!: ToastComponent;
+  dynamicTable!: DynamicTableComponent;
 
   constructor(options: IWorldOptions) {
     super(options);
@@ -38,7 +40,6 @@ export class CustomWorld extends World {
   }
 
   async useStorageState(storagePath: string): Promise<void> {
-    // Close existing context and create one with saved session
     if (this.context) await this.context.close();
     this.context = await this.browser.newContext({
       viewport: { width: 1440, height: 900 },
@@ -55,6 +56,7 @@ export class CustomWorld extends World {
     this.opportunityPage = new OpportunityPage(this.page);
     this.accountPage = new AccountPage(this.page);
     this.toast = new ToastComponent(this.page);
+    this.dynamicTable = new DynamicTableComponent(this.page);
   }
 
   async cleanup(): Promise<void> {
