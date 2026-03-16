@@ -1,0 +1,132 @@
+name: FH360 Automation Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # Nightly regression run at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  ENV: ci
+  FH360_BASE_URL: ${{ secrets.FH360_BASE_URL }}
+  CSP_USER: ${{ secrets.CSP_USER }}
+  CSP_PASS: ${{ secrets.CSP_PASS }}
+  RETAIL_USER: ${{ secrets.RETAIL_USER }}
+  RETAIL_PASS: ${{ secrets.RETAIL_PASS }}
+  COMMERCIAL_USER: ${{ secrets.COMMERCIAL_USER }}
+  COMMERCIAL_PASS: ${{ secrets.COMMERCIAL_PASS }}
+  MORTGAGE_USER: ${{ secrets.MORTGAGE_USER }}
+  MORTGAGE_PASS: ${{ secrets.MORTGAGE_PASS }}
+
+jobs:
+  # ── Stage 1: Install & Compile ──────────────────────────────
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+      - name: TypeScript compile check
+        run: npx tsc --noEmit
+
+  # ── Stage 2: Smoke Tests ────────────────────────────────────
+  smoke-tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - name: Run smoke tests
+        run: npx playwright test --grep @smoke
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: smoke-test-results
+          path: reports/allure-results/
+          retention-days: 30
+
+  # ── Stage 3: Full Regression ────────────────────────────────
+  regression-tests:
+    needs: smoke-tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [csp360, retail, commercial, mortgage]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - name: Run ${{ matrix.project }} tests
+        run: npx playwright test --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: ${{ matrix.project }}-results
+          path: reports/allure-results/
+          retention-days: 30
+
+  # ── Stage 4: Allure Report Generation ───────────────────────
+  generate-report:
+    needs: regression-tests
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          path: reports/allure-results/
+          merge-multiple: true
+      - name: Generate Allure report
+        run: npx allure generate reports/allure-results --clean -o reports/allure-report
+      - uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: reports/allure-report/
+          retention-days: 30
+
+  # ── Stage 5: Xray Result Sync (Jira) ───────────────────────
+  xray-sync:
+    needs: generate-report
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          path: reports/
+          merge-multiple: true
+      - name: Sync results to Xray
+        run: |
+          echo "Xray sync placeholder — configure with Xray REST API"
+          echo "POST results to: https://xray.cloud.getxray.app/api/v2/import/execution"
+          # curl -X POST \
+          #   -H "Content-Type: application/json" \
+          #   -H "Authorization: Bearer ${{ secrets.XRAY_TOKEN }}" \
+          #   -d @reports/results.json \
+          #   "https://xray.cloud.getxray.app/api/v2/import/execution"

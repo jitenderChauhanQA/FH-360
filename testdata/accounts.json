@@ -1,0 +1,17 @@
+{
+  "commercialAccount": {
+    "accountName": "First Horizon Partners",
+    "accountNumber": "ACC-2026-001",
+    "industry": "Financial Services",
+    "phone": "555-0300",
+    "type": "Customer"
+  },
+  "prospectAccount": {
+    "accountName": "TechVenture Inc",
+    "accountNumber": "ACC-2026-002",
+    "industry": "Technology",
+    "phone": "555-0400",
+    "website": "www.techventure.com",
+    "type": "Prospect"
+  }
+}

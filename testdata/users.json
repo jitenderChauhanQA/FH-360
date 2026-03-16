@@ -1,0 +1,22 @@
+{
+  "cspAgent": {
+    "profile": "csp-agent",
+    "role": "CSP Agent",
+    "storagePath": "./auth/csp-agent.json"
+  },
+  "retailBanker": {
+    "profile": "retail-banker",
+    "role": "Retail Banker",
+    "storagePath": "./auth/retail-banker.json"
+  },
+  "commercialBanker": {
+    "profile": "commercial-banker",
+    "role": "Commercial Banker",
+    "storagePath": "./auth/commercial-banker.json"
+  },
+  "mortgageOfficer": {
+    "profile": "mortgage-officer",
+    "role": "Mortgage Officer",
+    "storagePath": "./auth/mortgage-officer.json"
+  }
+}

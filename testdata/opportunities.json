@@ -1,0 +1,23 @@
+{
+  "newCheckingAccount": {
+    "name": "New Checking Account",
+    "amount": "50000",
+    "closeDate": "12/31/2026",
+    "stage": "Prospecting",
+    "type": "New Business"
+  },
+  "savingsProduct": {
+    "name": "Premium Savings Product",
+    "amount": "150000",
+    "closeDate": "06/30/2026",
+    "stage": "Qualification",
+    "type": "Existing Business"
+  },
+  "loanOpportunity": {
+    "name": "Commercial Loan - Q3",
+    "amount": "500000",
+    "closeDate": "09/30/2026",
+    "stage": "Needs Analysis",
+    "type": "New Business"
+  }
+}

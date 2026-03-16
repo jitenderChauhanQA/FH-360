@@ -1,0 +1,38 @@
+{
+  "name": "fh360-automation",
+  "version": "2.0.0",
+  "description": "FH360 Enterprise Automation Framework — Playwright + Cucumber BDD + Allure",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:csp360": "npx playwright test --project=csp360",
+    "test:retail": "npx playwright test --project=retail",
+    "test:commercial": "npx playwright test --project=commercial",
+    "test:mortgage": "npx playwright test --project=mortgage",
+    "test:smoke": "npx playwright test --grep @smoke",
+    "test:regression": "npx playwright test --grep @regression",
+    "bdd": "npx cucumber-js --require-module ts-node/register --require step-definitions/**/*.steps.ts --require fixtures/**/*.ts features/**/*.feature",
+    "bdd:smoke": "npx cucumber-js --require-module ts-node/register --require step-definitions/**/*.steps.ts --require fixtures/**/*.ts --tags @smoke features/**/*.feature",
+    "bdd:regression": "npx cucumber-js --require-module ts-node/register --require step-definitions/**/*.steps.ts --require fixtures/**/*.ts --tags @regression features/**/*.feature",
+    "demo": "npx playwright test --config=playwright.demo.config.ts --headed",
+    "demo:ui": "npx playwright test --config=playwright.demo.config.ts --ui",
+    "demo:login": "npx playwright test --config=playwright.demo.config.ts salesforce-login --headed",
+    "demo:leads": "npx playwright test --config=playwright.demo.config.ts lead-management --headed",
+    "demo:showcase": "npx playwright test --config=playwright.demo.config.ts framework-showcase --headed",
+    "report": "npx playwright show-report reports/html",
+    "report:demo": "npx playwright show-report reports/demo-html",
+    "report:allure": "npx allure generate reports/allure-results --clean -o reports/allure-report && npx allure open reports/allure-report"
+  },
+  "keywords": ["playwright", "cucumber", "bdd", "salesforce", "automation", "allure"],
+  "author": "FHN - Playwright Team",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.3.0",
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.19.15",
+    "allure-commandline": "^2.38.0",
+    "allure-playwright": "^3.6.0",
+    "dotenv": "^16.0.0",
+    "ts-node": "^10.9.2"
+  }
+}

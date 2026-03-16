@@ -1,0 +1,73 @@
+// tsconfig.json is the CONSTITUTION of your TypeScript project.
+
+
+// Without tsconfig.json:
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ❌ TypeScript doesn't know which JS version to compile to
+// ❌ Windsurf IntelliSense works poorly (no auto-complete)
+// ❌ import/export statements may fail
+// ❌ JSON imports fail (no resolveJsonModule)
+// ❌ TypeScript uses generic defaults → unexpected behavior
+// ❌ Different engineers get different compilation results
+// ❌ CI/CD pipeline may compile differently than local machine
+
+// // Real error you'd see in FH360:
+// import customerData from '../../data/csp360.data.json';
+// // Error: "Cannot find module - Consider using resolveJsonModule"
+
+{
+  "compilerOptions": {
+
+    // ─────────────────────────────────────────
+    // GROUP 1: What JavaScript to produce
+    // ─────────────────────────────────────────
+
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+
+    // ─────────────────────────────────────────
+    // GROUP 2: How to find and resolve files
+    // ─────────────────────────────────────────
+
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    // ─────────────────────────────────────────
+    // GROUP 3: Type checking strictness
+    // ─────────────────────────────────────────
+
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // ─────────────────────────────────────────
+    // GROUP 4: Output configuration
+    // ─────────────────────────────────────────
+
+    "outDir": "./dist",
+    "rootDir": "./",
+    "types": ["node", "@playwright/test"]
+  },
+
+  // ─────────────────────────────────────────
+  // Which files to include/exclude
+  // ─────────────────────────────────────────
+
+  "include": [
+    "tests/**/*",
+    "pages/**/*",
+    "utils/**/*",
+    "fixtures/**/*",
+    "components/**/*",
+    "step-definitions/**/*",
+    "config/**/*",
+    "enums/**/*",
+    "testdata/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

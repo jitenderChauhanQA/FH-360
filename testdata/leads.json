@@ -1,0 +1,33 @@
+{
+  "validLead": {
+    "firstName": "John",
+    "lastName": "Smith",
+    "company": "Acme Corporation",
+    "email": "jsmith@acme.com",
+    "phone": "555-0100",
+    "title": "VP of Finance",
+    "leadSource": "Web",
+    "status": "Open"
+  },
+  "minimalLead": {
+    "lastName": "Doe",
+    "company": "Test Corp"
+  },
+  "qualifiedLead": {
+    "firstName": "Jane",
+    "lastName": "Williams",
+    "company": "Finance LLC",
+    "email": "jwilliams@finance.com",
+    "phone": "555-0200",
+    "leadSource": "Phone Inquiry",
+    "status": "Qualified"
+  },
+  "webLead": {
+    "firstName": "Robert",
+    "lastName": "Johnson",
+    "company": "Tech Solutions",
+    "email": "rjohnson@techsol.com",
+    "leadSource": "Web",
+    "status": "Open"
+  }
+}

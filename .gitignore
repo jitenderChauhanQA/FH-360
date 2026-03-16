@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+dist/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Reports (generated — not committed)
+reports/
+allure-results/
+
+# Auth sessions (contain credentials)
+auth/*.json
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
