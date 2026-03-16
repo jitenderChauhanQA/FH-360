@@ -5,6 +5,11 @@ import { LoginPage } from '../pages/login.page';
 import { LeadPage } from '../pages/retail/lead.page';
 import { OpportunityPage } from '../pages/retail/opportunity.page';
 import { AccountPage } from '../pages/commercial/account.page';
+import { TreasuryPage } from '../pages/commercial/treasury.page';
+import { CustomerAuthPage } from '../pages/csp360/customerAuth.page';
+import { FraudReportPage } from '../pages/csp360/fraudReport.page';
+import { ServiceRequestPage } from '../pages/csp360/serviceRequest.page';
+import { MortgagePage } from '../pages/mortgage/mortgage.page';
 import { ToastComponent } from '../components/salesforce/toast.component';
 import { DynamicTableComponent } from '../components/salesforce/dynamic-table.component';
 
@@ -13,14 +18,19 @@ export class CustomWorld extends World {
   context!: BrowserContext;
   page!: Page;
 
-  // Page Objects
+  // ── Page Objects (all modules) ─────────────────────────────
   basePage!: BasePage;
   loginPage!: LoginPage;
   leadPage!: LeadPage;
   opportunityPage!: OpportunityPage;
   accountPage!: AccountPage;
+  treasuryPage!: TreasuryPage;
+  customerAuthPage!: CustomerAuthPage;
+  fraudReportPage!: FraudReportPage;
+  serviceRequestPage!: ServiceRequestPage;
+  mortgagePage!: MortgagePage;
 
-  // Components
+  // ── Components ─────────────────────────────────────────────
   toast!: ToastComponent;
   dynamicTable!: DynamicTableComponent;
 
@@ -55,6 +65,11 @@ export class CustomWorld extends World {
     this.leadPage = new LeadPage(this.page);
     this.opportunityPage = new OpportunityPage(this.page);
     this.accountPage = new AccountPage(this.page);
+    this.treasuryPage = new TreasuryPage(this.page);
+    this.customerAuthPage = new CustomerAuthPage(this.page);
+    this.fraudReportPage = new FraudReportPage(this.page);
+    this.serviceRequestPage = new ServiceRequestPage(this.page);
+    this.mortgagePage = new MortgagePage(this.page);
     this.toast = new ToastComponent(this.page);
     this.dynamicTable = new DynamicTableComponent(this.page);
   }

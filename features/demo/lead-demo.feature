@@ -1,4 +1,5 @@
 @demo @smoke @salesforce @lead-management
+@XRAY-TC-DEMO @XRAY-TS-DEMO
 Feature: Lead Management — Live Demo
   As a QA Automation Engineer presenting the FH360 Framework
   I want to demonstrate end-to-end lead creation in Salesforce

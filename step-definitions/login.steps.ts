@@ -30,6 +30,7 @@ When('the user clicks the Login button', async function (this: CustomWorld) {
   await this.loginPage.clickLogin();
 });
 
+// ── Assertions only in Then steps ────────────────────────────
 Then('the Salesforce dashboard should be displayed', async function (this: CustomWorld) {
   const isLoaded = await this.loginPage.isDashboardLoaded();
   expect(isLoaded).toBeTruthy();

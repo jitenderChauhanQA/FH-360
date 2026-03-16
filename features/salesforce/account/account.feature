@@ -1,4 +1,5 @@
 @regression @account @salesforce @commercial
+@XRAY-TC-300 @XRAY-TS-COMMERCIAL
 Feature: Account Management
   As a Commercial Banker
   I want to manage accounts in Salesforce
@@ -9,7 +10,7 @@ Feature: Account Management
     And the user navigates to the "FH360 Commercial" application
     And the user navigates to the "Accounts" tab
 
-  @smoke @create
+  @smoke @create @XRAY-TC-300-01
   Scenario: Create a new commercial account
     When the user clicks the "New" button
     And the user fills in the account form with the following details:
@@ -21,7 +22,7 @@ Feature: Account Management
     Then a success toast message should be displayed
     And the account "First Horizon Partners" should be visible on the record page
 
-  @edit
+  @edit @XRAY-TC-300-02
   Scenario: Edit an existing account
     Given an account "First Horizon Partners" exists in the system
     When the user opens the account "First Horizon Partners"

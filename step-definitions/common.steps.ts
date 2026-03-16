@@ -1,10 +1,8 @@
 import { Given, When, Then } from '@cucumber/cucumber';
-import { expect } from '@playwright/test';
 import { CustomWorld } from '../fixtures/world';
 
 // ── Authentication Steps (reusable across all apps) ──────────
 Given('the user is logged in as a Retail Banker', async function (this: CustomWorld) {
-  // Uses pre-saved storageState from auth setup
   await this.useStorageState('./auth/retail-banker.json');
 });
 
@@ -46,7 +44,7 @@ When('the user updates the {string} field to {string}', async function (this: Cu
   await this.basePage.fillField(fieldLabel, value);
 });
 
-// ── Toast Verification Steps ─────────────────────────────────
+// ── Toast Verification Steps (Then only — assertions here) ───
 Then('a success toast message should be displayed', async function (this: CustomWorld) {
   await this.toast.verifySuccess('');
 });

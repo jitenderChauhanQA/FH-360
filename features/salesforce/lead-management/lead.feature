@@ -1,4 +1,5 @@
 @regression @lead-management @salesforce @retail
+@XRAY-TC-101 @XRAY-TS-RETAIL
 Feature: Lead Management
   As a Retail Banker
   I want to manage leads in Salesforce
@@ -9,7 +10,7 @@ Feature: Lead Management
     And the user navigates to the "FH360 Retail" application
     And the user navigates to the "Leads" tab
 
-  @smoke @create
+  @smoke @create @XRAY-TC-101-01
   Scenario: Create a new lead with required fields
     When the user clicks the "New" button
     And the user fills in the lead form with the following details:
@@ -22,7 +23,7 @@ Feature: Lead Management
     Then a success toast message should be displayed
     And the lead "Smith" should be visible on the record page
 
-  @smoke @create
+  @smoke @create @XRAY-TC-101-02
   Scenario Outline: Create leads with different sources
     When the user clicks the "New" button
     And the user fills in the lead form with the following details:
@@ -39,7 +40,7 @@ Feature: Lead Management
       | Williams  | Finance LLC      | Phone Inquiry  | Working       |
       | Brown     | Retail Solutions | Partner        | Contacted     |
 
-  @edit
+  @edit @XRAY-TC-101-03
   Scenario: Edit an existing lead
     Given a lead "Smith" exists in the system
     When the user opens the lead record for "Smith"
@@ -48,7 +49,7 @@ Feature: Lead Management
     And the user saves the record
     Then a success toast message should be displayed
 
-  @convert
+  @convert @XRAY-TC-101-04
   Scenario: Convert a qualified lead
     Given a lead "Smith" exists with status "Qualified"
     When the user opens the lead record for "Smith"
