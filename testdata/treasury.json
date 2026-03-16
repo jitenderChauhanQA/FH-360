@@ -1,0 +1,22 @@
+{
+  "cashManagement": {
+    "productName": "Cash Management",
+    "requestType": "New Setup"
+  },
+  "wireTransfer": {
+    "productName": "Wire Transfer",
+    "requestType": "Modification"
+  },
+  "achProcessing": {
+    "productName": "ACH Processing",
+    "requestType": "New Setup"
+  },
+  "remoteDeposit": {
+    "productName": "Remote Deposit",
+    "requestType": "New Setup"
+  },
+  "lockboxServices": {
+    "productName": "Lockbox Services",
+    "requestType": "Modification"
+  }
+}

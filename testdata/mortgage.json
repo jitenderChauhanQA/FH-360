@@ -1,0 +1,30 @@
+{
+  "conventional": {
+    "applicantName": "Robert Williams",
+    "loanAmount": "350000",
+    "propertyAddress": "123 Main St, Memphis, TN",
+    "loanType": "Conventional",
+    "loanPurpose": "Purchase"
+  },
+  "fha": {
+    "applicantName": "Alice Johnson",
+    "loanAmount": "250000",
+    "propertyAddress": "456 Oak Ave, Nashville, TN",
+    "loanType": "FHA",
+    "loanPurpose": "Purchase"
+  },
+  "va": {
+    "applicantName": "Bob Martinez",
+    "loanAmount": "400000",
+    "propertyAddress": "789 Elm Dr, Knoxville, TN",
+    "loanType": "VA",
+    "loanPurpose": "Purchase"
+  },
+  "refinance": {
+    "applicantName": "David Wilson",
+    "loanAmount": "200000",
+    "propertyAddress": "321 Pine Ln, Chattanooga, TN",
+    "loanType": "Conventional",
+    "loanPurpose": "Refinance"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "customerAuth": {
+    "validCustomer": {
+      "searchTerm": "John Smith",
+      "ssn": "***-**-1234",
+      "dob": "01/15/1985"
+    },
+    "invalidCustomer": {
+      "searchTerm": "John Smith",
+      "ssn": "***-**-0000",
+      "dob": "01/01/2000"
+    }
+  },
+  "fraudReport": {
+    "cardFraud": {
+      "fraudType": "Card Fraud",
+      "description": "Unauthorized transaction on debit card",
+      "amount": "2500",
+      "incidentDate": "03/01/2026"
+    },
+    "identityTheft": {
+      "fraudType": "Identity Theft",
+      "description": "Unauthorized account opened in customer name",
+      "amount": "5000"
+    },
+    "wireFraud": {
+      "fraudType": "Wire Fraud",
+      "description": "Fraudulent wire transfer initiated",
+      "amount": "10000",
+      "incidentDate": "02/15/2026"
+    },
+    "checkFraud": {
+      "fraudType": "Check Fraud",
+      "description": "Forged check deposited",
+      "amount": "3000"
+    },
+    "achFraud": {
+      "fraudType": "ACH Fraud",
+      "description": "Unauthorized ACH debit",
+      "amount": "2000"
+    }
+  },
+  "serviceRequest": {
+    "addressChange": {
+      "subject": "Address Update Request",
+      "description": "Customer requests address change",
+      "priority": "Medium",
+      "category": "Account Maintenance"
+    },
+    "cardReplacement": {
+      "subject": "Card Replacement",
+      "description": "Customer lost their debit card",
+      "priority": "High",
+      "category": "Card Services"
+    },
+    "statementRequest": {
+      "subject": "Statement Request",
+      "description": "Customer needs printed statement",
+      "priority": "Low",
+      "category": "Account Maintenance"
+    },
+    "disputeTransaction": {
+      "subject": "Dispute Transaction",
+      "description": "Customer disputes unauthorized charge",
+      "priority": "High",
+      "category": "Disputes"
+    }
+  }
+}
