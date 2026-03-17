@@ -1,14 +1,13 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { MortgageLocators } from '../../locators/mortgage/mortgage.locators';
 
 export class MortgagePage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private applicantNameField = this.page.getByLabel('Applicant Name');
-  private loanAmountField = this.page.getByLabel('Loan Amount');
-  private propertyAddressField = this.page.getByLabel('Property Address');
+  private loc: MortgageLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new MortgageLocators(page);
   }
 
   // ── Mortgage Operations ────────────────────────────────────
@@ -19,9 +18,9 @@ export class MortgagePage extends BasePage {
     loanType?: string;
     loanPurpose?: string;
   }): Promise<void> {
-    await this.applicantNameField.fill(data.applicantName);
-    if (data.loanAmount) await this.loanAmountField.fill(data.loanAmount);
-    if (data.propertyAddress) await this.propertyAddressField.fill(data.propertyAddress);
+    await this.loc.applicantNameField.fill(data.applicantName);
+    if (data.loanAmount) await this.loc.loanAmountField.fill(data.loanAmount);
+    if (data.propertyAddress) await this.loc.propertyAddressField.fill(data.propertyAddress);
     if (data.loanType) {
       await this.dropdown.selectByLabel('Loan Type', data.loanType);
     }
@@ -43,7 +42,6 @@ export class MortgagePage extends BasePage {
   }
 
   async getMortgageApplicant(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 }

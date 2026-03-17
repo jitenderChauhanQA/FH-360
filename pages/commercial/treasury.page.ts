@@ -1,14 +1,13 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { TreasuryLocators } from '../../locators/commercial/treasury.locators';
 
 export class TreasuryPage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private productNameField = this.page.getByLabel('Product Name');
-  private accountField = this.page.getByLabel('Account');
-  private requestTypeField = this.page.getByLabel('Request Type');
+  private loc: TreasuryLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new TreasuryLocators(page);
   }
 
   // ── Treasury Operations ────────────────────────────────────
@@ -17,7 +16,7 @@ export class TreasuryPage extends BasePage {
     account?: string;
     requestType?: string;
   }): Promise<void> {
-    await this.productNameField.fill(data.productName);
+    await this.loc.productNameField.fill(data.productName);
     if (data.account) {
       await this.lookup.selectOption('Account', data.account);
     }
@@ -37,7 +36,6 @@ export class TreasuryPage extends BasePage {
   }
 
   async getTreasuryProductName(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 }

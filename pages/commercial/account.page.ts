@@ -1,15 +1,13 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { AccountLocators } from '../../locators/commercial/account.locators';
 
 export class AccountPage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private accountNameField = this.page.getByLabel('Account Name');
-  private accountNumberField = this.page.getByLabel('Account Number');
-  private phoneField = this.page.getByLabel('Phone');
-  private websiteField = this.page.getByLabel('Website');
+  private loc: AccountLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new AccountLocators(page);
   }
 
   // ── Account Creation ───────────────────────────────────────
@@ -21,10 +19,10 @@ export class AccountPage extends BasePage {
     website?: string;
     type?: string;
   }): Promise<void> {
-    await this.accountNameField.fill(data.accountName);
-    if (data.accountNumber) await this.accountNumberField.fill(data.accountNumber);
-    if (data.phone) await this.phoneField.fill(data.phone);
-    if (data.website) await this.websiteField.fill(data.website);
+    await this.loc.accountNameField.fill(data.accountName);
+    if (data.accountNumber) await this.loc.accountNumberField.fill(data.accountNumber);
+    if (data.phone) await this.loc.phoneField.fill(data.phone);
+    if (data.website) await this.loc.websiteField.fill(data.website);
     if (data.industry) {
       await this.dropdown.selectByLabel('Industry', data.industry);
     }
@@ -48,8 +46,7 @@ export class AccountPage extends BasePage {
 
   // ── Account Operations ─────────────────────────────────────
   async getAccountName(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 
   async isAccountCreated(name: string): Promise<boolean> {

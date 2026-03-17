@@ -58,10 +58,10 @@
   "include": [
     "tests/**/*",
     "pages/**/*",
+    "locators/**/*",
     "utils/**/*",
     "fixtures/**/*",
     "components/**/*",
-    "step-definitions/**/*",
     "config/**/*",
     "enums/**/*",
     "testdata/**/*"

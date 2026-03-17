@@ -1,16 +1,13 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { FraudReportLocators } from '../../locators/csp360/fraudReport.locators';
 
 export class FraudReportPage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private fraudTypeField = this.page.getByLabel('Fraud Type');
-  private descriptionField = this.page.getByLabel('Description');
-  private accountAffectedField = this.page.getByLabel('Account Affected');
-  private amountField = this.page.getByLabel('Amount');
-  private incidentDateField = this.page.getByLabel('Incident Date');
+  private loc: FraudReportLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new FraudReportLocators(page);
   }
 
   // ── Fraud Report Creation ──────────────────────────────────
@@ -22,11 +19,11 @@ export class FraudReportPage extends BasePage {
     incidentDate?: string;
   }): Promise<void> {
     await this.dropdown.selectByLabel('Fraud Type', data.fraudType);
-    await this.descriptionField.fill(data.description);
+    await this.loc.descriptionField.fill(data.description);
     if (data.accountAffected) {
-      await this.accountAffectedField.fill(data.accountAffected);
+      await this.loc.accountAffectedField.fill(data.accountAffected);
     }
-    if (data.amount) await this.amountField.fill(data.amount);
+    if (data.amount) await this.loc.amountField.fill(data.amount);
     if (data.incidentDate) {
       await this.datePicker.setDate('Incident Date', data.incidentDate);
     }
@@ -45,8 +42,7 @@ export class FraudReportPage extends BasePage {
   }
 
   async getFraudCaseNumber(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 
   async isFraudReportCreated(): Promise<boolean> {

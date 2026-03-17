@@ -1,18 +1,13 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { LeadLocators } from '../../locators/retail/lead.locators';
 
 export class LeadPage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private lastNameField = this.page.getByLabel('Last Name');
-  private firstNameField = this.page.getByLabel('First Name');
-  private companyField = this.page.getByLabel('Company');
-  private emailField = this.page.getByLabel('Email');
-  private phoneField = this.page.getByLabel('Phone');
-  private titleField = this.page.getByLabel('Title');
-  private convertButton = this.page.getByRole('button', { name: 'Convert' });
+  private loc: LeadLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new LeadLocators(page);
   }
 
   // ── Lead Creation ──────────────────────────────────────────
@@ -26,12 +21,12 @@ export class LeadPage extends BasePage {
     leadSource?: string;
     status?: string;
   }): Promise<void> {
-    if (leadData.firstName) await this.firstNameField.fill(leadData.firstName);
-    await this.lastNameField.fill(leadData.lastName);
-    await this.companyField.fill(leadData.company);
-    if (leadData.email) await this.emailField.fill(leadData.email);
-    if (leadData.phone) await this.phoneField.fill(leadData.phone);
-    if (leadData.title) await this.titleField.fill(leadData.title);
+    if (leadData.firstName) await this.loc.firstNameField.fill(leadData.firstName);
+    await this.loc.lastNameField.fill(leadData.lastName);
+    await this.loc.companyField.fill(leadData.company);
+    if (leadData.email) await this.loc.emailField.fill(leadData.email);
+    if (leadData.phone) await this.loc.phoneField.fill(leadData.phone);
+    if (leadData.title) await this.loc.titleField.fill(leadData.title);
     if (leadData.leadSource) {
       await this.dropdown.selectByLabel('Lead Source', leadData.leadSource);
     }
@@ -57,13 +52,12 @@ export class LeadPage extends BasePage {
 
   // ── Lead Operations ────────────────────────────────────────
   async convertLead(): Promise<void> {
-    await this.convertButton.click();
+    await this.loc.convertButton.click();
     await this.spinner.waitUntilGone();
   }
 
   async getLeadName(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 
   async isLeadCreated(lastName: string): Promise<boolean> {
@@ -72,9 +66,6 @@ export class LeadPage extends BasePage {
   }
 
   async getLeadStatus(): Promise<string> {
-    const statusField = this.page.locator(
-      'lightning-formatted-text[data-field="Status"]'
-    );
-    return (await statusField.textContent())?.trim() ?? '';
+    return (await this.loc.statusField.textContent())?.trim() ?? '';
   }
 }

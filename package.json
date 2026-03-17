@@ -1,7 +1,7 @@
 {
   "name": "fh360-automation",
   "version": "2.0.0",
-  "description": "FH360 Enterprise Automation Framework — Playwright + Cucumber BDD + Allure",
+  "description": "FH360 Enterprise Automation Framework — Playwright + Allure",
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
@@ -11,9 +11,6 @@
     "test:mortgage": "npx playwright test --project=mortgage",
     "test:smoke": "npx playwright test --grep @smoke",
     "test:regression": "npx playwright test --grep @regression",
-    "bdd": "npx cucumber-js --require-module ts-node/register --require step-definitions/**/*.steps.ts --require fixtures/**/*.ts features/**/*.feature",
-    "bdd:smoke": "npx cucumber-js --require-module ts-node/register --require step-definitions/**/*.steps.ts --require fixtures/**/*.ts --tags @smoke features/**/*.feature",
-    "bdd:regression": "npx cucumber-js --require-module ts-node/register --require step-definitions/**/*.steps.ts --require fixtures/**/*.ts --tags @regression features/**/*.feature",
     "demo": "npx playwright test --config=playwright.demo.config.ts --headed",
     "demo:ui": "npx playwright test --config=playwright.demo.config.ts --ui",
     "demo:login": "npx playwright test --config=playwright.demo.config.ts salesforce-login --headed",
@@ -27,8 +24,6 @@
   },
   "keywords": [
     "playwright",
-    "cucumber",
-    "bdd",
     "salesforce",
     "automation",
     "allure"
@@ -36,7 +31,6 @@
   "author": "FHN - Playwright Team",
   "license": "ISC",
   "devDependencies": {
-    "@cucumber/cucumber": "^11.3.0",
     "@playwright/test": "^1.51.0",
     "@types/node": "^22.19.15",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
@@ -44,7 +38,6 @@
     "allure-commandline": "^2.38.0",
     "allure-playwright": "^3.6.0",
     "dotenv": "^16.0.0",
-    "eslint": "^10.0.3",
-    "ts-node": "^10.9.2"
+    "eslint": "^10.0.3"
   }
 }

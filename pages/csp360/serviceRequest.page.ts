@@ -1,15 +1,13 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { ServiceRequestLocators } from '../../locators/csp360/serviceRequest.locators';
 
 export class ServiceRequestPage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private subjectField = this.page.getByLabel('Subject');
-  private descriptionField = this.page.getByLabel('Description');
-  private priorityField = this.page.getByLabel('Priority');
-  private categoryField = this.page.getByLabel('Category');
+  private loc: ServiceRequestLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new ServiceRequestLocators(page);
   }
 
   // ── Service Request Creation ───────────────────────────────
@@ -20,8 +18,8 @@ export class ServiceRequestPage extends BasePage {
     category?: string;
     contactName?: string;
   }): Promise<void> {
-    await this.subjectField.fill(data.subject);
-    if (data.description) await this.descriptionField.fill(data.description);
+    await this.loc.subjectField.fill(data.subject);
+    if (data.description) await this.loc.descriptionField.fill(data.description);
     if (data.priority) {
       await this.dropdown.selectByLabel('Priority', data.priority);
     }
@@ -46,14 +44,10 @@ export class ServiceRequestPage extends BasePage {
   }
 
   async getServiceRequestNumber(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 
   async getStatus(): Promise<string> {
-    const statusField = this.page.locator(
-      'lightning-formatted-text[data-field="Status"]'
-    );
-    return (await statusField.textContent())?.trim() ?? '';
+    return (await this.loc.statusField.textContent())?.trim() ?? '';
   }
 }

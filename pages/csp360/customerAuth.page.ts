@@ -1,21 +1,19 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { CustomerAuthLocators } from '../../locators/csp360/customerAuth.locators';
 
 export class CustomerAuthPage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private customerSearchField = this.page.getByLabel('Customer Search');
-  private ssnField = this.page.getByLabel('SSN');
-  private dobField = this.page.getByLabel('Date of Birth');
-  private verifyButton = this.page.getByRole('button', { name: 'Verify' });
+  private loc: CustomerAuthLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new CustomerAuthLocators(page);
   }
 
   // ── Customer Authentication ────────────────────────────────
   async searchCustomer(searchTerm: string): Promise<void> {
-    await this.customerSearchField.fill(searchTerm);
-    await this.customerSearchField.press('Enter');
+    await this.loc.customerSearchField.fill(searchTerm);
+    await this.loc.customerSearchField.press('Enter');
     await this.spinner.waitUntilGone();
   }
 
@@ -23,19 +21,17 @@ export class CustomerAuthPage extends BasePage {
     ssn?: string;
     dob?: string;
   }): Promise<void> {
-    if (data.ssn) await this.ssnField.fill(data.ssn);
+    if (data.ssn) await this.loc.ssnField.fill(data.ssn);
     if (data.dob) await this.datePicker.setDate('Date of Birth', data.dob);
-    await this.verifyButton.click();
+    await this.loc.verifyButton.click();
     await this.spinner.waitUntilGone();
   }
 
   async isCustomerVerified(): Promise<boolean> {
-    const verifiedBadge = this.page.getByText('Verified');
-    return verifiedBadge.isVisible();
+    return this.loc.verifiedBadge.isVisible();
   }
 
   async getCustomerName(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 }

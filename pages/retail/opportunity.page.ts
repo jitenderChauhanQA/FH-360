@@ -1,13 +1,13 @@
 import { Page } from '@playwright/test';
 import { BasePage } from '../base.page';
+import { OpportunityLocators } from '../../locators/retail/opportunity.locators';
 
 export class OpportunityPage extends BasePage {
-  // ── Locators ───────────────────────────────────────────────
-  private opportunityNameField = this.page.getByLabel('Opportunity Name');
-  private amountField = this.page.getByLabel('Amount');
+  private loc: OpportunityLocators;
 
   constructor(page: Page) {
     super(page);
+    this.loc = new OpportunityLocators(page);
   }
 
   // ── Opportunity Creation ───────────────────────────────────
@@ -19,8 +19,8 @@ export class OpportunityPage extends BasePage {
     accountName?: string;
     type?: string;
   }): Promise<void> {
-    await this.opportunityNameField.fill(data.name);
-    if (data.amount) await this.amountField.fill(data.amount);
+    await this.loc.opportunityNameField.fill(data.name);
+    if (data.amount) await this.loc.amountField.fill(data.amount);
     await this.datePicker.setDate('Close Date', data.closeDate);
     await this.dropdown.selectByLabel('Stage', data.stage);
     if (data.accountName) {
@@ -52,8 +52,7 @@ export class OpportunityPage extends BasePage {
   }
 
   async getOpportunityName(): Promise<string> {
-    const heading = this.page.getByRole('heading', { level: 1 });
-    return (await heading.textContent())?.trim() ?? '';
+    return (await this.loc.pageHeading.textContent())?.trim() ?? '';
   }
 
   async isOpportunityCreated(name: string): Promise<boolean> {
@@ -62,9 +61,6 @@ export class OpportunityPage extends BasePage {
   }
 
   async getStage(): Promise<string> {
-    const stageField = this.page.locator(
-      'lightning-formatted-text[data-field="StageName"]'
-    );
-    return (await stageField.textContent())?.trim() ?? '';
+    return (await this.loc.stageField.textContent())?.trim() ?? '';
   }
 }
